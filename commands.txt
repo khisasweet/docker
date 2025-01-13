@@ -1,1 +1,33 @@
 
+docker images
+docker pull ubuntu:latest
+docker run --name test -it ubuntu:latest bash
+
+#attach your shell to a running container.
+docker attach test
+#Exit the container again by typing Ctrl-PQ and verify your shell prompt reverts to your local machine.
+
+#Delete the container
+#Run another docker ps to verify your container is still running. Stop and kill the container using the docker stop and docker rm commands.
+
+docker stop test
+
+docker rm test
+docker ps -a
+
+### how to clone an app from GitHub, containerize it using Docker, and run it as a container.
+############################################
+
+# Execute the following commands once the terminal loads:
+git clone https://github.com/nigelpoulton/psweb
+cd psweb
+ls -l
+cat Dockerfile
+docker build -t test:latest .
+docker images
+docker run -d --name web1 --publish 8080:8080 test:latest
+
+# Use the following commands to clean up
+docker rm web1 -f
+docker rmi test:latest
+############################################
