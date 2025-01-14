@@ -31,3 +31,48 @@ docker run -d --name web1 --publish 8080:8080 test:latest
 docker rm web1 -f
 docker rmi test:latest
 ############################################
+
+docker images --digests alpine
+### If we want to find an image’s digest before pulling it, we can use the docker buildx imagetools command.
+
+$ docker buildx imagetools inspect nigelpoulton/k8sbook:latest
+
+# You will get a similar output
+Name:      docker.io/nigelpoulton/k8sbook:latest
+MediaType: application/vnd.docker.distribution.manifest.list.v2+json
+Digest:    sha256:13dd59a0c74e9a147800039b1ff4d61201375c008b96a29c5bd17244bce2e14b
+<Snip>
+
+#Pulling an image using the digest#
+docker pull nigelpoulton/k8sbook@sha256:13dd59a0...bce2e14b
+
+### It’s also possible to directly query the registry API for image data, including digest. The following curl command queries Docker Hub for the digest of the same image.
+$ curl https://hub.docker.com/v2/repositories/nigelpoulton/k8sbook/tags/?name=latest | jq '.results[].digest'
+
+#...
+"sha256:13dd59a0c74e9a147800039b1ff4d61201375c008b96a29c5bd17244bce2e14b"
+
+### Run the following command to see the different architectures supported behind the alpine:latest tag:
+docker buildx imagetools inspect alpine
+
+##### delete docker image #####
+docker rmi $(docker images -q) -f
+
+Summary of the Docker image commands
+
+Let’s revise some of the commands we’ve used.
+
+    docker pull is the command to download images from remote registries. It defaults to Docker Hub but works with other registries. The docker pull alpine:latest command will pull the image tagged as latest from the alpine repository on Docker Hub.
+
+    docker images lists all of the images in our Docker host’s local repository (image cache). We can add the --digests flag to see the SHA256 hashes.
+
+    docker inspect gives us a wealth of image-related metadata in a nicely formatted view.
+
+    docker manifest inspect lets us inspect the manifest list of images stored in registries. The docker manifest inspect ghcr.io/regclient/regctl command will show the manifest list for the regctl image on the GitHub Container Registry (GHCR).
+
+    docker buildx is a Docker CLI plugin that works with Docker’s latest build engine features. We learned how to use the imagetools sub-command to query manifest-related data from images.
+
+    docker scout is a Docker CLI plugin that integrates with the Docker Scout backend to perform image vulnerability scanning. It scans images, provides reports on vulnerabilities, and even suggests remediation actions.
+
+    docker rmi is the command used to delete images. It removes all layer data stored on the local filesystem. However, images associated with containers in running (up) or stopped (exited) states cannot be deleted.
+
