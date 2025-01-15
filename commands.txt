@@ -140,3 +140,43 @@ $ docker ps -a
 CONTAINER ID   IMAGE          COMMAND   STATUS                  NAMES
 d3c892ad0eb3   ubuntu:24.04   "bash"    Exited (0) 3 secs ago   ddd-ctr
 ########################################
+$ docker restart ddd-ctr
+ddd-ctr
+
+$ docker attach ddd-ctr
+root@d3c892ad0eb3:/#
+
+###################################
+We can type Ctrl-PQ to exit a container without killing the process we’re attached to. Type Ctrl-PQ to exit the container and run another docker ps command to verify the container is still running this time.
+
+#######################
+The always restart policy
+Let’s demonstrate the always policy by starting a new interactive container with the --restart always flag and directing it to run a shell process. We’ll then type exit to terminate the shell process and the container to see what happens.
+
+Run the following command to start an interactive container called neversaydie with the always restart policy.
+
+$ docker run --name neversaydie -it --restart always alpine sh
+
+Docker Containers: Key Commands
+
+Get a brief summary of the commands for managing Docker containers covered in this chapter.
+Summary of the Docker container commands
+
+    docker run is the command to start new containers. We give it the name of an image, and it starts a container from it. For example, the docker run -it ubuntu bash command starts an interactive container from the Ubuntu image and runs the Bash shell.
+
+    Ctrl-PQ is how we detach from a container stopping the process we’re attached to. We’ll use it frequently to detach from running containers without terminating them.
+
+    docker ps lists all running containers, and we can add the -a flag to also see containers in the stopped (Exited) state.
+
+    docker exec allows us to run commands inside containers. For example, the docker exec -it <container-name> bash command will start a new Bash shell inside a running container and connect your terminal to it. For this to work, the container must include the Bash shell. This command runs a ps command inside a running container without opening an interactive shell session: docker exec <container-name> ps.
+
+    docker stop stops a running container and puts it in the Exited (137) state. It issues a SIGTERM to the container’s PID 1 process and allows the container 10 seconds to gracefully quit. If the process hasn’t cleaned up and stopped within 10 seconds, it sends a SIGKILL to force the container to immediately terminate.
+
+    docker restart restarts a stopped container.
+
+    docker rm deletes a stopped container. We can add the -f flag to delete the container without having to stop it first.
+
+    docker inspect shows us the detailed configuration and runtime information about a container.
+
+    docker debug attaches a debug shell to a container or image and lets us run commands that aren’t available inside the container or image. It requires a Pro, Team, or Business Docker subscription.
+
