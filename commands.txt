@@ -130,3 +130,13 @@ docker ps -a
 #######
 
 
+docker run --name ddd-ctr -it ubuntu:24.04 bash
+
+root@d3c892ad0eb3:/# exit
+
+# Check the status of the exited process
+$ docker ps -a
+
+CONTAINER ID   IMAGE          COMMAND   STATUS                  NAMES
+d3c892ad0eb3   ubuntu:24.04   "bash"    Exited (0) 3 secs ago   ddd-ctr
+########################################
