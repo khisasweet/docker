@@ -76,3 +76,57 @@ Let’s revise some of the commands we’ve used.
 
     docker rmi is the command used to delete images. It removes all layer data stored on the local filesystem. However, images associated with containers in running (up) or stopped (exited) states cannot be deleted.
 
+
+#### Starting a Container
+
+$ docker run -d --name webserver -p 5005:8080 nigelpoulton/ddd-book:web0.1
+
+
+
+    The docker run instructs Docker to run a new container.
+
+    The -d flag tells Docker to run it in the background as a daemon process and detach from the local terminal.
+
+    The --name flag tells Docker to name this container webserver.
+
+    The -p 5005:8080 flag maps port 5005 on the local system to port 8080 inside the container. This works because the container’s web server is listening on port 8080.
+
+    The nigelpoulton/ddd-book:web0.1 argument tells Docker which image to use to start the container.
+
+#############################
+Once it has a local copy of the image, the daemon makes a request to containerd asking for a new container. containerd then instructs runc to create the container and start the app. It also performs the port mapping.
+###########
+docker exec -it webserver sh
+docker inspect webserver
+docker inspect nigelpoulton/ddd-book:web0.1
+docker exec webserver cat views/home.pug
+docker rm webserver -f
+
+###########
+
+# For your reference, these are the commands you need to run in the terminal.
+
+docker exec -it webserver sh
+# Starts an interactive shell session in the running 'webserver' container
+
+vi views/home.pug
+# Opens the 'home.pug' file located in the 'views' directory using the 'vi' text editor
+
+docker ps
+# Lists all currently running Docker containers
+
+docker stop webserver
+# Stops the running 'webserver' container
+
+docker restart webserver
+# Restarts the 'webserver' container
+
+docker rm webserver -f
+# Forcefully removes the 'webserver' container, even if it’s running
+
+docker ps -a
+# Lists all containers, including both running and stopped ones
+
+#######
+
+
