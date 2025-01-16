@@ -180,3 +180,48 @@ Summary of the Docker container commands
 
     docker debug attaches a debug shell to a container or image and lets us run commands that aren’t available inside the container or image. It requires a Pro, Team, or Business Docker subscription.
 
+#####Building the Docker image
+$ docker build -t ddd-book:ch8.node .
+
+
+$ docker images
+
+docker inspect ddd-book:ch8.node
+##### Pushing the image to Docker Hub
+$ docker login -u <username>
+
+
+
+Login with your Docker ID to push and pull images from Docker Hub. 
+
+Username: nigelpoulton
+
+Password:
+
+WARNING! Your password will be stored unencrypted in /home/ubuntu/.docker/config.json.
+
+Configure a credential helper to remove this warning.
+Tagging the image
+docker tag ddd-book:ch8.node nigelpoulton/ddd-book:ch8.node
+docker image ls
+docker push nigelpoulton/ddd-book:ch8.node
+
+docker run -d --name c1 \
+
+  -p 5005:8080 \
+
+  nigelpoulton/ddd-book:ch8.node
+
+The -d flag runs the container in the background, and the --name flag calls it c1. The -p 5005:8080 maps port 5005 on our Docker host to port 8080 inside the container, which means we’ll be able to point a browser to port 5005 and reach the app. The last line tells Docker to base the container on the nigelpoulton/ddd-book:ch8.node image you just built. Docker will use the local copy of the image from the previous steps. It only pulls a copy from Docker Hub if it doesn’t have a local copy.
+
+Examining the image history
+
+$ docker history ddd-book:ch8.node
+
+Inspecting the image
+$ docker inspect ddd-book:ch8.node
+
+
+
+
+
