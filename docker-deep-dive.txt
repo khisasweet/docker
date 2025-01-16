@@ -1,1 +1,8 @@
 
+git clone https://github.com/nigelpoulton/ddd-book.git
+$ cd ddd-book/multi-container/
+
+docker compose up
+docker network ls
+docker volume ls
+
