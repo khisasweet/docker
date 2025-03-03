@@ -1,0 +1,37 @@
+Chapter Summary: Docker Networking
+
+Summary of the concepts covered in this chapter.
+Commands
+
+Docker networking has its own docker network sub-command, and the main commands include:
+
+    docker network ls lists all the Docker networks available to the host.
+
+    docker network create is how you create a new Docker network. You have to give the network a name and you can use the -d flag to specify which driver creates it.
+
+    docker network inspect provides detailed configuration information about Docker networks.
+
+    docker network prune deletes all unused networks on a Docker host.
+
+    docker network rm Deletes specific networks on a Docker host or swarm.
+
+You also ran some native Linux commands.
+
+    brctl show prints a list of all kernel bridges on the Docker host and shows if any containers are connected.
+
+    ip link show prints bridge configuration data. You ran an ip link show docker0 to see the configuration of the docker0 bridge on your Docker host.
+Quick recap
+
+    The Container Network Model (CNM) is the design document for Docker networks and defines the three major constructs — sandboxes, endpoints, and networks.
+
+    Libnetwork is the reference implementation of the CMN and is an open-source project maintained by the Moby project. Docker uses it to implement its core networking, including control plane services such as service discovery.
+
+    Drivers extend the capabilities of libnetwork by implementing specific network topologies, such as bridge and overlay networks. Docker ships with built-in drivers, but you can also use third-party drivers.
+
+    Single-host bridge networks are the most basic type of Docker network but are only suitable for local development and very small applications. They do not scale, and you need to map containers to host ports if you want to publish services outside of the network.
+
+    Overlay networks are all the rage and are excellent container-only multi-host networks. We’ll talk about them in-depth in the next chapter.
+
+    The macvlan driver lets you create Docker networks that connect containers to existing physical networks and VLANs. They make containers first-class citizens on external networks by giving them their own MAC and IP addresses. Unfortunately, you have to run your host NICs in promiscuous mode, meaning they won’t work in public clouds.
+      
+      
