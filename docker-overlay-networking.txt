@@ -1,0 +1,26 @@
+Chapter Summary: Docker Overlay Newtworking
+
+Summary of the concepts covered in this chapter.
+Commands
+
+Let's explore all the commands covered in this chapter:
+
+    docker network create tells Docker to create a new network. You use the -d overlay flag to use the overlay driver to create an overlay network. You can also pass the -o encrypted flag to tell Docker to encrypt network traffic. However, performance may drop in the region of 10%.
+
+    docker network ls lists all the container networks visible to a Docker host. Docker hosts running in swarm mode only see overlay networks if they run containers attached to the network. This keeps network-related management traffic to a minimum.
+
+    docker network inspect shows detailed information about a particular container network. You can find out the scope, driver, IPv4 and IPv6 info, subnet configuration, IP addresses of connected containers, VXLAN network ID, encryption state, and more.
+
+    docker network rm deletes a network.
+
+Quick recap
+
+In this chapter, we created a new Docker overlay network and learned about the following technologies:
+
+    Overlay networks allow containers to be connected across multiple hosts, making them appear to be on the same network.
+
+    VXLAN is the underlying technology used to create overlay networks, enabling communication between containers on different physical networks.
+
+    Docker's overlay networking simplifies the process of creating and managing overlay networks, providing a secure and efficient way to connect containers across different hosts.
+
+    Best Practices: Use overlay networks for complex networking scenarios that require communication between containers on different hosts . Consider using encryption for sensitive data. Monitor network performance and optimize as needed.
